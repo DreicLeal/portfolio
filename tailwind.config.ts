@@ -9,6 +9,9 @@ export default {
   ],
   theme: {
     extend: {
+      screens: {
+        'min-790': '790px'
+      },
       keyframes: {
         slide: {
           "0%": { transform: "translateX(40%)" },
@@ -30,6 +33,7 @@ export default {
       },
     },
   },
+  darkMode: "class",
   plugins: [
     plugin(function ({ addUtilities }) {
       addUtilities({

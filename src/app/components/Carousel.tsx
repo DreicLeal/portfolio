@@ -1,3 +1,5 @@
+"use client"
+import { useApp } from "@/context/appContext";
 import { ReactNode } from "react";
 import { FaCss3Alt, FaReact } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa6";
@@ -15,6 +17,8 @@ interface IconInterface {
     name: string;
 }
 export default function Carousel() {
+   const {theme} = useApp()
+
     const icons: IconInterface[] = [
         { component: <FaReact className="w-full h-full" />, name: "React" },
         { component: <FaCss3Alt className="w-full h-full" />, name: "CSS3" },
@@ -28,7 +32,7 @@ export default function Carousel() {
       ];
 
   return (
-    <div className="relative flex gap-24 justify-center items-center overflow-hidden h-48 w-full bg-gray-600 group">
+    <div className={`relative flex ${theme && "dark"} gap-24 justify-center items-center overflow-hidden h-48 w-full dark:bg-zinc-800 bg-sky-600 group`}>
       <ul className=" flex  justify-center items-center animate-slide space-x-24 group-hover:animation-paused">
         {icons.map((icon, index) => (
           <li key={index} title={icon.name} className="w-20 h-20">

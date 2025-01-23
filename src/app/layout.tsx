@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
 import "./globals.css";
+import Header from "./components/Header";
+import AppProvider from "@/context/appContext";
 
 export const metadata: Metadata = {
   title: "Dreic Leal",
@@ -14,7 +16,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="w-[100%]">
+        <AppProvider>
+          <Header />
+          {children}
+        </AppProvider>
+      </body>
     </html>
   );
 }
