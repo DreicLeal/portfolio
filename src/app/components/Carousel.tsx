@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useApp } from "@/context/appContext";
 import { ReactNode } from "react";
 import { FaCss3Alt, FaReact } from "react-icons/fa";
@@ -13,40 +13,41 @@ import {
 } from "react-icons/si";
 
 interface IconInterface {
-    component: ReactNode; 
-    name: string;
+  component: ReactNode;
+  name: string;
 }
+
 export default function Carousel() {
-   const {theme} = useApp()
+  const { theme } = useApp();
 
-    const icons: IconInterface[] = [
-        { component: <FaReact className="w-full h-full" />, name: "React" },
-        { component: <FaCss3Alt className="w-full h-full" />, name: "CSS3" },
-        { component: <SiTailwindcss className="w-full h-full" />, name: "TailwindCSS" },
-        { component: <SiNextdotjs className="w-full h-full" />, name: "Next.js" },
-        { component: <SiTypescript className="w-full h-full" />, name: "TypeScript" },
-        { component: <SiNodedotjs className="w-full h-full" />, name: "Node.js" },
-        { component: <FaGithub className="w-full h-full" />, name: "GitHub" },
-        { component: <SiPostgresql className="w-full h-full" />, name: "PostgreSQL" },
-        { component: <SiJest className="w-full h-full" />, name: "Jest" },
-      ];
+  const iconsStyle =
+  "w-full h-full hover:text-[var(--border)] dark:hover:text-[var(--highlight)] ease-in-out duration-300";
 
-  return (
-    <div className={`relative flex ${theme && "dark"} gap-24 justify-center items-center overflow-hidden h-48 w-full dark:bg-zinc-800 bg-sky-600 group`}>
-      <ul className=" flex  justify-center items-center animate-slide space-x-24 group-hover:animation-paused">
-        {icons.map((icon, index) => (
-          <li key={index} title={icon.name} className="w-20 h-20">
-            {icon.component}
-          </li>
-        ))}
-      </ul>
-      <ul className=" flex  justify-center items-center animate-slide2 space-x-24 group-hover:animation-paused">
-        {icons.map((icon, index) => (
-          <li key={index} title={icon.name} className="w-20 h-20">
-            {icon.component}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+const icons: IconInterface[] = [
+  { component: <FaReact className={iconsStyle} />, name: "React" },
+  { component: <FaCss3Alt className={iconsStyle} />, name: "CSS3" },
+  { component: <SiTailwindcss className={iconsStyle} />, name: "TailwindCSS" },
+  { component: <SiNextdotjs className={iconsStyle} />, name: "Next.js" },
+  { component: <SiTypescript className={iconsStyle} />, name: "TypeScript" },
+  { component: <SiNodedotjs className={iconsStyle} />, name: "Node.js" },
+  { component: <FaGithub className={iconsStyle} />, name: "GitHub" },
+  { component: <SiPostgresql className={iconsStyle} />, name: "PostgreSQL" },
+  { component: <SiJest className={iconsStyle} />, name: "Jest" },
+];
+
+return (
+  <div
+    className={`relative flex ${
+      theme && "dark"
+    } gap-24 items-center overflow-hidden whitespace-nowrap h-36 w-full backdrop-blur-[1px] bg-[var(--overlay)] group z-10`}
+  >
+    <ul className="flex justify-center items-center animate-slide space-x-24 group-hover:animation-paused">
+      {[...icons, ...icons].map((icon, index) => (
+        <li key={index} title={icon.name} className="w-20 h-20">
+          {icon.component}
+        </li>
+      ))}
+    </ul>
+  </div>
+);
 }

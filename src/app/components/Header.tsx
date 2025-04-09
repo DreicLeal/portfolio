@@ -2,15 +2,20 @@
 import { useApp } from "@/context/appContext";
 import Link from "next/link";
 import { useState } from "react";
-import { FaRegCopy } from "react-icons/fa";
-import { FiMoon, FiSun } from "react-icons/fi";
+import { LuCopy, LuCopyCheck } from "react-icons/lu";
+import { FiMoon, FiSun, FiMenu, FiX } from "react-icons/fi";
 import UsefulLinks from "./UsefulLinks";
+import enFlag from "../../../public/EN.png";
+import ptFlag from "../../../public/PT.png";
+import Image from "next/image";
 
 export default function Header() {
-  const { theme, setTheme } = useApp();
-
+  const { theme, setTheme, langSpreader, changingLanguage, language } =
+    useApp();
+  const translatorAux = langSpreader.header.nav;
   const email = "dreicleal@hotmail.com";
   const [copy, setCopy] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   async function handleCopy() {
     try {
@@ -19,45 +24,100 @@ export default function Header() {
     } catch (e) {
       console.error(e);
     } finally {
-      setTimeout(() => setCopy(false), 300);
+      setTimeout(() => setCopy(false), 400);
     }
   }
 
   return (
-    <header className={`w-full ${theme && "dark"} border-b-2 `}>
-      <div className="flex h-16 gap-4 p-6 w-full bg-sky-600 dark:bg-zinc-800 items-center justify-between transition ease-in-out duration-300">
-        <div className="flex justify-center items-center gap-6 border-solid border border-sky-600 dark:border-white rounded-md bg-white dark:bg-zinc-800 max-[700px]:h-8">
-          <p className="font-bold text-zinc-700 dark:text-white pl-4">
-            {email}
-          </p>
+    <header
+      className={`w-full ${
+        theme && "dark"
+      } backdrop-blur-[1px] fixed bg-[var(--overlay)] top-0 z-20`}
+    >
+      <div className="flex h-16 gap-4 p-6 w-full items-center justify-between transition ease-in-out duration-300">
+        {/* Email Copy Feature - Hidden on Small Screens */}
+        <div
+          onClick={handleCopy}
+          className="hidden md:flex justify-center items-center text-[var(--foreground)] hover:bg-[var(--hover)] active:bg-[var(--border)] dark:hover:text-[var(--highlight)] dark:hover:border-[var(--highlight)] border border-[var(--foreground)] group rounded-md cursor-pointer transition ease-in-out duration-300"
+        >
+          <p className="font-bold pl-4">{email}</p>
           <button
             onClick={handleCopy}
-            className="flex items-center justify-center font-bold text-zinc-800 rounded-sm border-none p-2 w-16 h-full dark:hover:bg-white/[10%] dark:active:bg-white/[15%] hover:bg-sky-600/[15%] active:bg-sky-600/[25%] transition ease-in-out duration-300"
+            className="flex items-center justify-center font-bold text-[var(--primary)] rounded-r-md border-none p-2 w-14 h-full active:bg-[var(--border)] transition ease-in-out duration-300"
           >
             {copy ? (
-              "Copied!"
+              <LuCopyCheck className="text-[var(--primary)] h-6 w-6" />
             ) : (
-              <FaRegCopy className="text-zinc-800 dark:text-white h-6 w-6" />
+              <LuCopy className="text-[var(--primary)] h-6 w-6" />
             )}
-          </button> 
+          </button>
         </div>
-        <nav className="flex gap-4">
-          <Link className="font-bold text-white hover:bg-white/[10%] px-2 rounded-md transition ease-in-out duration-300" href={"/"}>
-            Home
+
+        <div className="flex items-center gap-4">
+          {/* UsefulLinks visível em sm+ */}
+          <div className="hidden sm:flex">
+            <UsefulLinks />
+          </div>
+
+          {/* Hamburger Menu for Useful Links */}
+          {/* Ícone de menu e dropdown apenas em sm- */}
+          <div className="sm:hidden relative">
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="p-2 border dark:bg-[var(--primary)] border-transparent hover:bg-[var(--hover)] dark:hover:border-[var(--highlight)] hover:border-[var(--border)] group duration-300 rounded-full"
+            >
+              {menuOpen ? (
+                <FiX className="text-white dark:group-hover:text-[var(--highlight)]" />
+              ) : (
+                <FiMenu className="text-white" />
+              )}
+            </button>
+
+            {menuOpen && (
+              <div className="absolute top-16 right-0 bg-[var(--overlay)] p-4 rounded-md shadow-lg z-50">
+                <UsefulLinks />
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Navigation Links */}
+        <nav className="sm:flex gap-4">
+          <Link
+            className="font-bold text-[var(--foreground)] hover:bg-[var(--hover)] active:bg-[var(--border)] dark:hover:text-[var(--highlight)] dark:hover:border-[var(--highlight)] border border-transparent px-2 rounded-md transition ease-in-out duration-300"
+            href={"#top"}
+          >
+            {translatorAux.home}
           </Link>
-          <Link className="font-bold text-white hover:bg-white/[10%] px-2 rounded-md transition ease-in-out duration-300" href={"/projects"}>
-            Projects
+          <Link
+            className="font-bold text-[var(--foreground)] hover:bg-[var(--hover)] active:bg-[var(--border)] dark:hover:text-[var(--highlight)] dark:hover:border-[var(--highlight)] border border-transparent px-2 rounded-md transition ease-in-out duration-300"
+            href={"#projects"}
+          >
+            {translatorAux.projects}
           </Link>
         </nav>
-        <UsefulLinks/>
+
+        {/* Language Toggle */}
         <button
-          className="p-2 border bg-white dark:bg-zinc-800 dark:border-white border-sky-600 rounded-full"
+          onClick={changingLanguage}
+          className="font-bold text-[var(--foreground)] min-w-8 rounded-full transition ease-in-out duration-300"
+        >
+          <Image
+            src={language === "EN" ? enFlag : ptFlag}
+            className="rounded-full w-8"
+            alt="country flag"
+          />
+        </button>
+
+        {/* Theme Toggle */}
+        <button
+          className="p-2 border dark:bg-[var(--primary)] border-transparent hover:bg-[var(--hover)] dark:hover:border-[var(--highlight)] hover:border-[var(--border)] group duration-300 rounded-full"
           onClick={() => setTheme(!theme)}
         >
           {theme ? (
-            <FiSun className="text-white" />
+            <FiSun className="text-white dark:group-hover:text-[var(--highlight)]" />
           ) : (
-            <FiMoon className="text-zinc-800" />
+            <FiMoon className="text-white" />
           )}
         </button>
       </div>
