@@ -8,6 +8,9 @@ import Footer from "./components/Footer";
 export const metadata: Metadata = {
   title: "Dreic Leal",
   description: "My Portfolio",
+  icons: {
+    icon: "/favicon.ico"
+  },
 };
 
 export default function RootLayout({
@@ -31,7 +34,7 @@ export default function RootLayout({
             disableRotation={false}
           />
           {children}
-          <Footer/>
+          <Footer />
         </AppProvider>
       </body>
     </html>
