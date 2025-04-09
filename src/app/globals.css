@@ -3,15 +3,29 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
   --foreground: #171717;
+  --background: #ffffff;
+  --hover: rgba(255, 255, 255, 0.4);       /* igual ao white/[10%] */
+  --border: #1e40af;                        /* equivalente ao blue-600 */
+  --highlight: rgba(234, 179, 8, 0.5);      /* equivalente ao yellow-500/50 */
+  --overlay: rgba(0, 0, 0, 0.3);            /* equivalente ao black/30 */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
     --foreground: #ededed;
+    --background: #0a0a0a;
+    --hover: rgba(255, 255, 255, 0.4); 
+    --border: #1e40af;
+    --highlight: rgba(234, 179, 8, 0.5);
+    --overlay: rgba(0, 0, 0, 0.3);
   }
+}
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
 body {
