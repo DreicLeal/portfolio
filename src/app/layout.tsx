@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="w-full h-full">
+      <body>
         <AppProvider>
           <Particles
             className="fixed inset-0 z-[1]"

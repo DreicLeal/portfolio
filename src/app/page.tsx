@@ -1,13 +1,13 @@
 import Description from "./components/Description";
 import Header from "./components/Header";
-import ProjectsSection from "./components/Projects/PtojectsSection";
+import ProjectsSection from "./components/Projects/ProjectsSection";
 
 export default function Home() {
   return (
-    <div >
+    <div>
       <Header />
       <Description />
-      <ProjectsSection/>
+      <ProjectsSection />
     </div>
   );
 }
